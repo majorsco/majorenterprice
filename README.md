@@ -25,4 +25,3 @@ majorenterprice/
 4. The official logo lives in `assets/images/logo.png` (transparent, white). To swap it, replace that file keeping the same name.
 
 The site uses plain HTML, CSS, and JavaScript. Marketplace and investment pages are concept pages; the contact form is a front-end demo and is not connected to a backend. Before launching financial or payment features, arrange appropriate technical, legal, and regulatory setup.
-# majorenterprice
