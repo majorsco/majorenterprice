@@ -13,3 +13,33 @@ if (toggle && nav) {
 }
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
+
+// Contact form (Formspree)
+const form = document.querySelector('#contact-form');
+if (form) {
+  const status = document.querySelector('#form-status');
+  const button = form.querySelector('button[type="submit"]');
+  const setStatus = (msg, type) => { status.textContent = msg; status.className = 'form-status ' + type; };
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint || endpoint.includes('YOUR_FORM_ID')) {
+      setStatus('This form is not connected yet. Please email us directly.', 'error');
+      return;
+    }
+    button.disabled = true;
+    setStatus('Sending…', 'pending');
+    try {
+      const res = await fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (res.ok) {
+        form.reset();
+        setStatus('Thank you! Your message has been sent. We will get back to you soon.', 'success');
+      } else {
+        setStatus('Something went wrong. Please try again in a moment.', 'error');
+      }
+    } catch (err) {
+      setStatus('Network error. Please check your connection and try again.', 'error');
+    }
+    button.disabled = false;
+  });
+}
